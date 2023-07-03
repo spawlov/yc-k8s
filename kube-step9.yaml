@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: django-app
+  labels:
+    name: django-app
+spec:
+  containers:
+    - name: django-app
+      image: spawlov/django-app:latest
+      env:
+        - name: DEBUG
+          value: "False"
+        - name: SECRET_KEY
+          value: "5zb0%xls*s#4rlgs4(=khay%oo9$$)z2=sig6k0_*"
+      ports:
+        - containerPort: 80
+          name: http-web-svc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    name: django-app
+  ports:
+    - name: service-port
+      protocol: TCP
+      port: 80
+      targetPort: http-web-svc
+  type: LoadBalancer

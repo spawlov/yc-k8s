@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: django-app
+  labels:
+    app: Django
+spec:
+  containers:
+    - name: container-django
+      image: spawlov/django_app:latest
+      env:
+        - name: SECRET_KEY
+          value: "hvd*1xcmu39+9(($ys(@+jq@c!tksh=3d#b#nr*7_nkin%82ab"
+        - name: DATABASE_URL
+          value: "postgres://test_k8s:OwOtBep9Frut@localhost:5432/test_k8s"
+      ports:
+        - containerPort: 8000
+#      volumeMounts:
+#        - mountPath: /var/lib/postgresql/data
+#          name: db_data
+
+
+  
