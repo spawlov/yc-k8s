@@ -52,13 +52,13 @@ $ kubectl run <имя базы>-postgresql-client --rm --tty -i --restart='Never
 ```
 для создания новой базы для приложения и пользователя, выполните команды:
 ```shell-session
-postgres=# CREATE DATABASE test_k8s;
-postgres=# CREATE USER test_k8s WITH PASSWORD 'OwOtBep9Frut';
-postgres=# ALTER ROLE test_k8s SET client_encoding TO 'utf8';
-postgres=# ALTER ROLE test_k8s SET default_transaction_isolation TO 'read committed';
-postgres=# ALTER ROLE test_k8s SET timezone TO 'UTC';
-postgres=# ALTER DATABASE test_k8s OWNER TO test_k8s;
-postgres=# GRANT ALL PRIVILEGES ON DATABASE test_k8s TO test_k8s;
+postgres=# CREATE DATABASE <db_name>;
+postgres=# CREATE USER <db_user> WITH PASSWORD '<db_password>';
+postgres=# ALTER ROLE <db_user> SET client_encoding TO 'utf8';
+postgres=# ALTER ROLE <db_user> SET default_transaction_isolation TO 'read committed';
+postgres=# ALTER ROLE <db_user> SET timezone TO 'UTC';
+postgres=# ALTER DATABASE <db_name> OWNER TO <db_user>;
+postgres=# GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <db_user>;
 postgres=# \q
 ```
 отредактируйте файлы `django-config.yaml` и `django-service.yaml`
