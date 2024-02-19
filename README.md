@@ -70,7 +70,7 @@ $ kubectl get svc
 ```
 В файле `hosts` поставьте в соответсвие с вашим `IP` домен `star-burger.test`
 
-Запустите деплой проекта комендой:
+Запустите деплой проекта командой:
 ```sell-session
 $ kubectl apply -f .kube/
 ```
