@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: edu-goofy-allen
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  labels:
+    name: nginx-ingress
+spec:
+  tls:
+  - hosts:
+      - edu-goofy-allen.sirius-k8s.dvmn.org
+    secretName: kube-root-ca.crt
+  rules:
+  - host: edu-goofy-allen.sirius-k8s.dvmn.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nginx-service
+            port: 
+              number: 30351

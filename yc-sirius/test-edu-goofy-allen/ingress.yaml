@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myingress
+  namespace: edu-goofy-allen
+  labels:
+    name: myingress
+spec:
+  rules:
+  - host: edu-goofy-allen.sirius-k8s.dvmn.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: web-server
+            port: 
+              number: 30351

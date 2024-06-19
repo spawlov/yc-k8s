@@ -3,9 +3,11 @@ kind: Service
 metadata:
   name: nginx-service
   namespace: edu-goofy-allen
+  labels:
+    app.kubernetes.io/app: nginx-service
 spec:
   selector:
-    app: nginx
+    app: nginx-app
   ports:
   - name: http
     protocol: TCP
