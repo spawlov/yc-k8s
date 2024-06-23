@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrate
+  namespace: edu-goofy-allen
+  labels:
+    app.kubernetes.io/name: django-migrate
+    app.kubernetes.io/env: dev
+    app.kubernetes.io/owner: SergeyPavlov
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+        - name: django-app
+          image: spawlov/k8s-web:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              value: "postgres://$(username):$(password)@$(host):$(port)/$(name)?sslmode=verify-full&sslrootcert=/opt/.postgresql/root.crt"
+          envFrom:
+            - secretRef:
+                name: postgres
+            - secretRef:
+                name: django-secret
+          volumeMounts:
+            - name: pg-root-cert
+              mountPath: "/opt/.postgresql"
+              readOnly: true
+          command:
+            - python
+            - manage.py
+            - migrate
+            - --noinput
+      volumes:
+        - name: pg-root-cert
+          secret:
+            secretName: pg-root-cert
+      restartPolicy: Never

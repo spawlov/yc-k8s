@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deploy
+  namespace: edu-goofy-allen
+  labels:
+    app.kubernetes.io/app: django-app
+    app.kubernetes.io/name: django
+    app.kubernetes.io/env: dev
+    app.kubernetes.io/owner: SergeyPavlov
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      name: django
+      labels:
+        app: django
+    spec:
+      containers:
+        - name: django
+          image: spawlov/k8s-web:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              value: "postgres://$(username):$(password)@$(host):$(port)/$(name)?sslmode=verify-full&sslrootcert=/opt/.postgresql/root.crt"
+          envFrom:
+            - secretRef:
+                name: postgres
+            - secretRef:
+                name: django-secret
+          volumeMounts:
+            - name: pg-root-cert
+              mountPath: "/opt/.postgresql"
+              readOnly: true
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+      volumes:
+        - name: pg-root-cert
+          secret:
+            secretName: pg-root-cert
