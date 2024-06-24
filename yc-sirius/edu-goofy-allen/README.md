@@ -17,6 +17,7 @@ docker pull <namespace_in_dockerhub>/k8s-web:latest
 Проверьте, возможно уже есть `Secret` с сертификатом для подключения к базе данных, в этом случае можно пропустить шаг с установкой сертификата и созданием Secret:
 
 ```shell
+kubectl get secret
 kubectl get secret pg-root-cert -o yaml
 ```
 
@@ -37,7 +38,7 @@ kubectl create secret generic pg-root-cert --from-file=<path_to_cert>root.crt
 
 Перед запуском приложения нужно применить миграции. Для применения миграций к базе при обновлении приложения используется следующая команда:
 ```shell
-kubectl apply -f migrate/.
+kubectl apply -f migrate
 ```
 
 Для запуска приложения нужно создать объект Deployment:
