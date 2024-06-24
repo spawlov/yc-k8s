@@ -22,7 +22,7 @@ kubectl get secret pg-root-cert -o yaml
 
 #### Установка рутового SSL сертификата для подключения к Postgres
 Для верификации сервера при шифровании соединения необходимо поместить в secrets рутовый сертификат Яндекса. 
-Для этого его необоходимо сначала [скачать](https://yandex.cloud/ru/docs/managed-postgresql/operations/connect#linux-macos_1) со страницы справки. 
+Для этого его необоходимо сначала [скачать](https://yandex.cloud/ru/docs/managed-postgresql/operations/connect?utm_referrer=https%3A%2F%2Fgithub.com%2Fspawlov%2Fyc-k8s%2Ftree%2Fmain%2Fyc-sirius%2Fedu-goofy-allen#get-ssl-cert) со страницы справки. 
 Затем поместить в secrets:
 ```shell
 kubectl create secret generic pg-root-cert --from-file=<path_to_cert>root.crt
